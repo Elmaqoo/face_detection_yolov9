@@ -1,17 +1,26 @@
 <h1 align="center"><span>YOLOv9 for Face Detection</span></h1>
 
-The face detection task identifies and pinpoints human faces in images or videos. This repo demonstrates how to train a YOLOv9 model for highly accurate face detection on the WIDER Face dataset. 
+This repository demonstrates how to train and deploy a YOLOv9 model for highly accurate face detection in both images and videos. Using the WIDER Face dataset, the model has been fine-tuned to detect human faces with high precision, making it suitable for a variety of applications such as security systems, face tracking, and more.  
 
 <p align="center" margin: 0 auto;>
   <img src="assets/result.jpg" />
 </p>
 
+
 ## ⚙️ Installation
 Clone this repo and install [requirements.txt](https://github.com/spacewalk01/yolov9-face-detection/blob/main/yolov9/requirements.txt) for YOLOv9:
 ```
-git clone https://github.com/spacewalk01/yolov9-face-detection
-cd yolov9-face-detection/yolov9
+git clone https://github.com/Elmaqoo/face_detection_yolov9
+
+Suggested Using Docker environment (recommended)
+python -m venv venv
+venv\Scripts\activate
+
+cd face_detection_yolov9/yolov9
 pip install -r requirements.txt
+Download and install CUDA 12.4 (https://developer.nvidia.com/cuda-12-4-0-download-archive)
+Download and install CUDNN 9.6 (https://developer.nvidia.com/cudnn-downloads)
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 ```
 
 ## 🤖 Pretrained Model
@@ -25,6 +34,9 @@ The WIDER dataset comprises of more than 30k images with more than 390k faces, e
 **Dataset structure**
 ```
 ${ROOT}
+└── assets
+    └── video
+    └── images
 └── yolov9
 └── datasets/    
     └── widerface/
@@ -40,6 +52,7 @@ ${ROOT}
 └── train2yolo.py
 └── val2yolo.py
 └── widerface.yaml
+└── best.pt
 ```
 
 To prepare the data:
@@ -70,13 +83,18 @@ python train_dual.py --workers 4 --device 0 --batch 4 --data ../widerface.yaml -
 For inference, run the following command:
 
 ``` shell
-python detect.py --weights runs/train/yolov9-c5/weights/best.pt --source assets/worlds-largest-selfie.jpg
+python detect.py --weights runs/train/yolov9-c5/weights/best.pt --source ../assets/worlds-largest-selfie.jpg
 ```
 
 Or if you want to use the trained model, download it from the above link and run the following command:
 
 ``` shell
-python detect.py --weights best.pt --source assets/worlds-largest-selfie.jpg
+# For single image inference
+python detect.py --weights ../best.pt --source ../assets/worlds-largest-selfie.jpg
+# For bulk image processing
+python detect.py --weights ../best.pt --source ../assets/images/ 
+# For video processing
+python detect_video.py --weights ../best.pt --source ../assets/video/test_1.mp4 
 ```
 
 ## 🔗 Reference
