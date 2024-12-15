@@ -1,6 +1,6 @@
 <h1 align="center"><span>YOLOv9 for Face Detection</span></h1>
 
-This repository demonstrates how to train and deploy a YOLOv9 model for highly accurate face detection in both images and videos. Using the WIDER Face dataset, the model has been fine-tuned to detect human faces with high precision, making it suitable for a variety of applications such as security systems, face tracking, and more.  
+This repository demonstrates how to train and deploy a YOLOv9 model for highly accurate face detection in both images, videos and live video. Using the WIDER Face dataset, the model has been fine-tuned to detect human faces with high precision, making it suitable for a variety of applications such as security systems, face tracking, and more.  
 
 <p align="center" margin: 0 auto;>
   <img src="assets/result.jpg" />
@@ -95,6 +95,10 @@ python detect.py --weights ../best.pt --source ../assets/worlds-largest-selfie.j
 python detect.py --weights ../best.pt --source ../assets/images/ 
 # For video processing
 python detect_video.py --weights ../best.pt --source ../assets/video/test_1.mp4 
+# For live video processing
+python detect_live_video.py --weights ../best.pt 
+
+# add "--device cpu" if running slow
 ```
 
 ## 🔗 Reference
